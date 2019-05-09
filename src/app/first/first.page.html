@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Prestamos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding >
+
+  <!-- <ion-menu-toggle>
+    <ion-button fill="solid" expand="block" color="dark" >Toggle Menu</ion-button>
+  </ion-menu-toggle>
+
+  <ion-button fill="solid" expand="block" color="dark"  (click)="openMenu()"> Menu </ion-button>
+  <ion-button fill="solid" expand="block" color="dark"  routerLink="/menu/menu/second"> Second </ion-button> -->
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Nombre" [(ngModel)]="prestamoNombre"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Cantidad" [(ngModel)]="prestamoCantidad"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input placeholder="Teléfono" [(ngModel)]="prestamoTelefono"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button (click)="CreatePrestamo()" [disabled]="!prestamoNombre || !prestamoCantidad || !prestamoTelefono">
+          <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+          &nbsp;Create Record
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
+  <!-- Tarjeta -->
+  <ion-card *ngFor="let item of prestamos">
+    <span *ngIf="!item.isEdit; else elseBlock">
+      <ion-card-header>
+        <ion-card-title>{{item.Nombre}} debe {{item.Cantidad}} pesos</ion-card-title>
+        <ion-card-subtitle>tiene el Teléfono: {{item.Telefono}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+ 
+        <ion-button shape="round" color="secondary" size="small" (click)="EditPrestamo(item)">
+          <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+ 
+        </ion-button>
+        <ion-button shape="round" color="danger" size="small" (click)="RemovePrestamo(item.id)">
+          <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
+ 
+        </ion-button>
+      </ion-card-content>
+    </span>
+    <ng-template #elseBlock>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                Edit
+              </ion-col>
+              <ion-col>
+                <ion-button fill="clear" color="medium" size="small" (click)="item.isEdit = false">
+                  Cancel
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button fill="outline" color="success" size="small" (click)="UpdatePrestamo(item)">
+                  Update
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label><strong>Nombre</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditNombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Cantidad</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditCantidad"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Teléfono</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="item.EditTelefono"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ng-template>
+  </ion-card>
+
+</ion-content>
